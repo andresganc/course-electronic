@@ -1,14 +1,13 @@
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ELECTRON Y REACT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-ELECTRON Y REACT
+ELECTRON Y REACT CONFIGURACION INICIAL
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ELECTRON Y REACT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ======================================================================================
-Configuracion del proyecto
+CONFIGURACION DEL PROYECTO INICIAL - PASOS
 ======================================================================================
 
-
-Documentacion: https://www.freecodecamp.org/news/building-an-electron-application-with-create-react-app-97945861647c/
+- Documentacion: https://www.freecodecamp.org/news/building-an-electron-application-with-create-react-app-97945861647c/
 
 
 1. ejecutar create-react-app para generar una aplicación React básica
@@ -29,16 +28,24 @@ Documentacion: https://www.freecodecamp.org/news/building-an-electron-applicatio
     // Carga para React en http://localhost:3000
     mainWindow.loadFile("http://localhost:3000");
 
-5. agregar una entrada principal package.jsonparaelectron-starter.js
+5. agregar una entrada principal package.json para electron-starter.js
 
 6. agregar un objetivo de ejecución para iniciar Electron package.json
 
 7. npm start seguido por npm run electron
 
+8. Produccion Agregar linea 
+    
+    Package.json
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
+
+    electron-starter.js
+
 
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 CODIGO: electron-starter.js
+Paso 3 y 4
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 const electron = require('electron');
@@ -102,6 +109,7 @@ app.on('activate', function () {
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 CODIGO: package.json
+Paso 5 y 6
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 {
@@ -116,12 +124,44 @@ CODIGO: package.json
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
+  "homepage": "./",
   "main": "src/electron-starter.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   }
+}
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ELECTRON Y REACT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TRAS DEPENDENCIAS IMPORTANTES PARA ELECTRON
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ELECTRON Y REACT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+======================================================================================
+DEPENDENCIA RELOAD
+======================================================================================
+
+- Recarga automaticamente la ventana de electron cuando se realizan cambios. (No es necesario para y volver a cargar la ventana)
+
+- Instalacion
+    $ npm install electron-reload
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+CODIGO: electro-starter.js
+Lineas de codigo para agregar
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// Uso de electron-reload
+if (process.env.NODE_ENV !== 'production'){
+  require('electron-reload')(__dirname, {
+    // Linea adicional para el reload de los archivos .js (Electron)
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
+  })
 }

@@ -1,28 +1,59 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+// Uso de electron-reload
+if (process.env.NODE_ENV !== 'production'){
+  require('electron-reload')(__dirname, {
+    // Linea adicional para el reload de los archivos .js (Electron)
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
+  })
+}
+
+
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 600
+    /*
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
+    */
+    
   })
 
   // and load the index.html of the app.
   //mainWindow.loadFile('index.html')
-  // Carga para React en http://localhost:3000
-  mainWindow.loadURL("http://localhost:3000");
 
+  // Carga para React en http://localhost:3000
+  //mainWindow.loadURL("http://localhost:3000");
+
+
+  // ========================== CARGA DE ELECTRON & REACT EN DEV Y BUILD INICIO =======================
+  /*
+  mainWindow.loadURL(url.format({
+    pathname: path.join(_dirname, "/../build/index.html"),
+    protocol: "file:",
+    slashes: true
+  }))
+  */
+  
+  const startUrl = process.env.ELECTRON_START_URL || url.format({
+    pathname: path.join(__dirname, '/../build/index.html'),
+    protocol: 'file:',
+    slashes: true
+  });
+  mainWindow.loadURL(startUrl);
+  // ========================== CARGA DE ELECTRON & REACT EN DEV Y BUILD FIN =======================
+  
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -31,12 +62,51 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  // ================= Llamada de Menu ====================
+  const mainMenu = Menu.buildFromTemplate(MenuTemplate);
+  Menu.setApplicationMenu(mainMenu);
 }
+
+// ================= Menu ====================
+const MenuTemplate = [
+  {
+
+    label: 'File',
+    submenu: [
+      {
+        label: 'Nuevo Producto',
+        accelerator: 'Ctrl+N',
+        click() {
+          alert('New Product')
+        }
+      }
+    ]
+
+  }
+]
+// ================= Menu ====================
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+/*
+app.on('ready', () => {
+  mainWindow = new BrowserWindow({});
+  mainWindow.loadURL(url.format({
+    //pathname: path.join(__dirname, '/../build/index.html'),
+    //protoco: 'file:',
+    //slashes: true
+  }))
+
+  //const mainMenu = Menu.buildFromTemplate(MenuTemplate);
+  //Menu.setApplicationMenu(mainMenu);
+})
+*/
+
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
