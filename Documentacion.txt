@@ -18,7 +18,7 @@ CONFIGURACION DEL PROYECTO INICIAL - PASOS
 
     $ npm install --save-dev electron
 
-3. agregar main.jsdesde electron-quick-start (lo cambiaremos de nombre electron-starter.js, para mayor claridad)
+3. agregar main.js desde electron-quick-start (lo cambiaremos de nombre electron-starter.js, para mayor claridad)
 
 4. modificar la llamada a mainWindow.loadURL (in electron-starter.js) para usar localhost:3000(webpack-dev-server)
 

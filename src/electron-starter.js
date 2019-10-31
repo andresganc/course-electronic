@@ -32,7 +32,7 @@ function createWindow () {
   //mainWindow.loadFile('index.html')
 
   // Carga para React en http://localhost:3000
-  //mainWindow.loadURL("http://localhost:3000");
+  mainWindow.loadURL("http://localhost:3000");
 
 
   // ========================== CARGA DE ELECTRON & REACT EN DEV Y BUILD INICIO =======================
@@ -44,16 +44,18 @@ function createWindow () {
   }))
   */
   
+  /*
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/../build/index.html'),
     protocol: 'file:',
     slashes: true
   });
   mainWindow.loadURL(startUrl);
+  */
   // ========================== CARGA DE ELECTRON & REACT EN DEV Y BUILD FIN =======================
   
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // Open the DevTools. (Activar o desactivar la ventana de herramientas para desarroladores)
+  //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
