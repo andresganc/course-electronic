@@ -7,6 +7,6 @@
 
     - La electronica nace en 1948 con la invencion de transistor en los laboratorios de AT&T
 
-<img src='./image.png' alt='Creadores del transistor'>
+<img src='./images/transistor-creators.png' alt='Creadores del transistor'>
 
     John Bardeen, William Shockley y Walter Brattain, los inventores del transistor, 1948
